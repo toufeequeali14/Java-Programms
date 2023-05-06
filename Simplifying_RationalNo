@@ -1,0 +1,55 @@
+import java.util.Scanner ;
+
+class Rational
+{
+    private int numerator ;
+    private int denominator;
+
+    Rational(int numerator, int denominator) {
+
+        this.numerator = numerator;
+        this.denominator = denominator;
+
+        int min;
+        int divisor;
+
+        if (numerator < denominator)
+            min = numerator;
+        else min = denominator;
+
+        for (int i = 2; i <= min; i++) {
+
+            divisor = i;
+            while (numerator % divisor == 0 && denominator % divisor == 0) {
+
+                numerator /= divisor;
+                denominator /= divisor;
+            }
+        }
+        System.out.println("The simplest form is: "+numerator+"/"+denominator) ;
+
+    }
+}
+class Addition extends Rational
+{
+Addition(int a, int b)
+{
+    super(a,b);
+}
+
+
+}
+
+public class Simplifying_RationalNo {
+    public static void main(String args[]) {
+
+        Scanner s = new Scanner(System.in);
+        System.out.println("Enter the Numerator: ");
+        int numerator = s.nextInt();
+        System.out.println("Enter the Denominator: ");
+        int denominator = s.nextInt();
+        Rational r = new Rational(numerator, denominator);                                                                                           //        int n = 48;
+
+        
+    }
+}

@@ -1,0 +1,184 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;   // Import the FileWriter class
+import java.io.IOException;
+
+public class NextWordPrediction {
+    NextWordPrediction next;
+    NextWordPrediction headWordsToList = null;
+    String word;
+
+    NextWordPrediction(){
+        this.next = null;
+    }
+
+    public String readFile(String path){
+        String data = " ";
+        int counter = 0;
+        try {
+            BufferedReader br = new BufferedReader(
+                    new FileReader(path));
+            String str;
+
+            while((str = br.readLine()) != null){
+                counter++;
+                if (counter == 1){
+                    data = data.trim();
+                }
+                data = data +str;
+            }
+            br.close();
+
+        } catch(Exception ex) {
+            System.out.println("Error Message is: "+ ex.getMessage());
+        }
+        return data;
+    }
+
+
+   public String preprocessing(String data){
+        String cleaned_data = " ";
+//       String fileSizedArray = " ";
+       int counter = 0;
+       int fileSize = 0;
+       try {
+           BufferedReader br = new BufferedReader(
+                             new FileReader("F:\\THIRD SEMESTER\\Data Structures Programms\\JavaFiling\\data.txt"));
+           String str;
+           int strSize;
+           String var;
+           while((str = br.readLine()) != null){
+
+               strSize= str.length();
+               fileSize = fileSize+strSize;
+
+
+               for(int i = 0; i < strSize; i++){
+
+                   for(int k = 97, l = 65; k <= 122 && l <= 90; k++, l++){
+                       if(str.charAt(i)== (char)k || str.charAt(i) == (char)l) {
+                           //System.out.print(str.charAt(i));
+                           counter++;
+                           if (counter == 1)
+                               cleaned_data = cleaned_data.trim();
+                           cleaned_data = cleaned_data+String.valueOf(str.charAt(i));
+                       }
+                       else if(str.charAt(i) == ' '){
+                           cleaned_data = cleaned_data+String.valueOf(str.charAt(i));
+                           // System.out.print(" ");
+                           break;
+                       }
+                   }
+               }
+           }
+           br.close();
+
+       } catch(Exception ex) {
+           System.out.println("Error Message is: "+ ex.getMessage());
+       }
+
+       //System.out.println(cleaned_data);
+
+        return cleaned_data;
+   }
+
+   public String[] split(String cleaned_data){
+        String[] words = cleaned_data.split(" ");
+//        for (int i = 0; i < cleaned_data.length(); i++){
+//            cleaned_data.charAt(i)
+//        }
+
+
+    return words;
+   }
+
+
+
+
+    public NextWordPrediction words2List(String[] words){
+
+        for (int i = 0; i < words.length; i++){
+            NextWordPrediction newNode = new NextWordPrediction();
+            newNode.word = words[i];
+            if (headWordsToList == null){
+                headWordsToList = newNode;
+                newNode.next = null;
+            }
+            else{
+                NextWordPrediction cur = headWordsToList;
+                while (cur.next != null){
+                    cur= cur.next;
+                }
+                cur.next = newNode;
+                newNode.next = null;
+
+            }
+
+        }
+
+
+        return headWordsToList;
+    }
+
+    public String[] predictNextWord(String query, NextWordPrediction headReceiver){
+        NextWordPrediction cur = headWordsToList;
+        String resultArray[] = new String[2];
+        boolean flag1 =false;
+        boolean flag2 = false;
+            while (cur != null){
+
+                if (cur.word.equalsIgnoreCase( query)){
+                    System.out.println("++++++++++++++++++++++++++++++++++");
+                    if (cur.next != null) {
+                       // flag1 = true;
+                        //if (flag1 == true)
+                        resultArray[0] = cur.next.word;
+                        if (cur.next.next!= null){
+                            resultArray[1] = cur.next.next.word;
+                            break;
+                        }
+                        else {
+                            resultArray[1] =  "No 2nd nextword ";
+                            break;
+                        }
+                    }
+                    else {
+                        resultArray[0] = "No next word";
+                        break;
+                    }
+                }
+
+
+                else {
+                    cur = cur.next;
+                    resultArray[0] = "Enter new word" ;
+                    resultArray[1] = " ";
+                }
+            }
+            return resultArray;
+    }
+
+
+    public static void main(String agrs[]){
+
+        NextWordPrediction obj = new NextWordPrediction();
+
+        String data = obj.readFile("F:\\THIRD SEMESTER\\Data Structures Programms\\JavaFiling\\data.txt");
+        String cleaned_data = obj.preprocessing(data);
+
+        String[] words = obj.split(cleaned_data) ;
+
+        NextWordPrediction objL = obj.words2List(words);
+
+        NextWordPrediction cur = objL;
+
+        String[] results = obj.predictNextWord("IBA", objL.headWordsToList);
+
+        System.out.println("-----------------------");
+
+        System.out.println(results[0]);
+        System.out.println(results[1]);
+
+
+    }
+}

@@ -1,0 +1,48 @@
+/* In the 'main method' Provide addresses of five files to be read by the five threads.
+Then this program will read files concruently through threads.
+
+(I have created a thread pool of fixed size with five threads.)
+ */
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class FileReaderThread implements Runnable {
+    private String fileName;
+
+    public FileReaderThread(String fileName) {
+        this.fileName = fileName;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("\n\nThread " + Thread.currentThread().getName() + " is reading file " + fileName+"\n\n");
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Process each line of the file
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Thread " + Thread.currentThread().getName() + " finished reading file " + fileName);
+    }
+
+    public static void main(String[] args) {
+        String[] fileNames = {"/E:\\Semester4\\Operating System Theory/file1.txt", "/E:\\Semester4\\Operating System Theory/file2.txt", "/E:\\Semester4\\Operating System Theory/file3.txt",
+                "/E:\\Semester4\\Operating System Theory/file4.txt", "/E:\\Semester4\\Operating System Theory/file5.txt"};
+        ExecutorService executor = Executors.newFixedThreadPool(5);
+
+        for (String fileName : fileNames) {
+            executor.submit(new FileReaderThread(fileName));
+        }
+
+        executor.shutdown();
+    }
+
+}
+

@@ -1,0 +1,37 @@
+import java.util.Scanner ;
+
+class Checking
+{
+    public static void calcluateBMI(double mass, double height)
+    {
+        double BMI = (mass / (height * height)) * 703;
+
+        if(BMI < 18.5)
+            System.out.println("UnderWeight.") ;
+
+        else if(BMI >= 18.5 && BMI <= 24.9)
+            System.out.println("Normal.") ;
+
+        else if(BMI >= 25 && BMI <= 29.9)
+            System.out.println("OverWeight.") ;
+
+        else if(BMI >= 30)
+            System.out.println("Obese.") ;
+        }
+}
+
+public class BMI_checking {
+
+    public static void main( String args[])
+    {
+        Checking c = new Checking() ;
+        Scanner s = new Scanner( System.in) ;
+        System.out.println("Enter your Weight in (pounds): ");
+        double mass = s.nextDouble() ;
+        
+        System.out.println("Enter your Height in (inches): ");
+        double height = s.nextDouble() ;
+
+        c.calcluateBMI( mass, height) ;
+    }
+}

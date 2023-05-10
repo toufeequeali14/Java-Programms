@@ -1,0 +1,61 @@
+import java.util.Scanner ;
+public class CGPA_Calculator
+{
+    public static void main(String args[])
+    {
+        CalProcess c = new CalProcess() ;
+
+        Scanner keyboard = new Scanner(System.in);
+
+        System.out.println("Number of subjects: ");
+
+        int numOfSubs = keyboard.nextInt();
+        System.out.println("**********************************************");
+        c.clacMethod(numOfSubs) ;
+
+    }
+}
+class CalProcess
+{
+    Scanner s = new Scanner(System.in);
+    double marksMethod(int numOfSubs)
+    {
+
+        for( int i = 0; i < numOfSubs; i++)
+
+        System.out.println("Enter marks of subjetc: "+i+1) ;
+        double marks = s.nextDouble() ;
+
+        return marks;
+    }
+
+    void clacMethod(int numOfSubs)
+    {
+
+        Scanner s = new Scanner(System.in);
+        double indivCgpa[] = new double[numOfSubs];
+        int creditHrs[] = new int[numOfSubs];
+        double gradePoints[] = new double[numOfSubs];
+        double SumOf_gradePoints = 0, SumOf_creditHrs = 0;
+        double netCgpa = 0;
+
+        for (int i = 0; i < numOfSubs; i++) {
+            System.out.println("GPA of subject" + (i + 1));
+
+            indivCgpa[i] = s.nextDouble();
+
+            System.out.println("Credit hours of subject" + (i + 1));
+            creditHrs[i] = s.nextInt();
+            System.out.println("**********************************************");
+            SumOf_creditHrs = SumOf_creditHrs + creditHrs[i];
+
+            gradePoints[i] = indivCgpa[i] * creditHrs[i];
+            SumOf_gradePoints = SumOf_gradePoints + gradePoints[i];
+        }
+
+        netCgpa = SumOf_gradePoints / SumOf_creditHrs;
+
+        System.out.println("Net CGPA is: " + netCgpa);
+
+    }
+}

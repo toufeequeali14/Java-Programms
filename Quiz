@@ -30,3 +30,37 @@ const result = array.map((value, index) => {
 result.forEach(item => {
   console.log(item);
 });
+
+
+//Task_03
+
+
+const objectsWithValues = {
+    Name: "Toufeeque",
+    age: "19",
+    country: "Pakistan",
+    semester: "5th",
+    CMS: 5,
+    innerObj: {
+      contactNumber1: "12343253245",
+      email1: "g@gmail.com",
+      contactNumber2: "12343764756",
+      email2: "t@gmail.com",
+      contactNumber3: "987679",
+      email3: "k@gmail.com",
+    },
+  };
+  
+  function printValues(obj) {
+    for (const key in obj) {
+      if (typeof obj[key] === "object") {
+        printValues(obj[key]);
+      } else {
+        console.log(obj[key]);
+      }
+    }
+  }
+  
+  console.log("Values: ");
+  printValues(objectsWithValues);
+  

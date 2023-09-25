@@ -1,0 +1,19 @@
+//Task01
+function sum_Of_Marks(Array_of_marks){
+    let sum = 0;
+    // console.log("Sum of Marks: ");
+    for( marks in Array_of_marks){
+        sum+= Array_of_marks[marks];
+    }
+    // console.log("Sum of Marks: ", sum);
+    return sum;
+}
+
+function average(Array_of_marks){
+
+    average = sum_Of_Marks(Array_of_marks)/(Array_of_marks.length);
+    console.log("Average: ", average)
+}
+
+const Array_of_values = [88, 78, 99, 89];
+average(Array_of_values);

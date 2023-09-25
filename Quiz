@@ -17,3 +17,16 @@ function average(Array_of_marks){
 
 const Array_of_values = [88, 78, 99, 89];
 average(Array_of_values);
+
+
+
+//Task_02
+const array = [10, 20, 30, 40, 50];
+
+const result = array.map((value, index) => {
+  return `Value at index ${index} is ${value}`;
+});
+
+result.forEach(item => {
+  console.log(item);
+});
